@@ -27,8 +27,17 @@ defineOptions({
 });
 
 // --- DataTable ---
+interface Product {
+    id: number;
+    name: string;
+    category: string;
+    quantity: number;
+    status: string;
+    price: number;
+}
+
 const tableFilter = ref('');
-const selectedRow = ref(null);
+const selectedRow = ref<Product | null>(null);
 const products = ref([
     { id: 1, name: 'Bamboo Watch', category: 'Accessories', quantity: 24, status: 'INSTOCK', price: 65 },
     { id: 2, name: 'Blue Band', category: 'Fitness', quantity: 12, status: 'LOWSTOCK', price: 79 },
@@ -203,7 +212,7 @@ const paginatorRows = ref(5);
                 </Column>
             </DataTable>
             <p v-if="selectedRow" class="text-sm text-muted-foreground">
-                Selected: {{ (selectedRow as any)?.name }}
+                Selected: {{ selectedRow.name }}
             </p>
         </section>
 

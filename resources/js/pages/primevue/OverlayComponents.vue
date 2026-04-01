@@ -42,13 +42,20 @@ const bottomDrawerVisible = ref(false);
 
 // Popover
 const popoverRef = ref();
-const selectedMember = ref<{name:string; role:string} | null>(null);
-const teamMembers = [
+
+interface TeamMember {
+    name: string;
+    role: string;
+    avatar: string;
+}
+
+const selectedMember = ref<TeamMember | null>(null);
+const teamMembers: TeamMember[] = [
     { name: 'Alice Johnson', role: 'Admin', avatar: 'AJ' },
     { name: 'Bob Smith', role: 'Editor', avatar: 'BS' },
     { name: 'Carol White', role: 'Viewer', avatar: 'CW' },
 ];
-function showPopover(event: Event, member: {name:string; role:string}) {
+function showPopover(event: Event, member: TeamMember) {
     selectedMember.value = member;
     popoverRef.value.show(event);
 }
@@ -194,7 +201,7 @@ function confirmPopup(event: Event) {
                 <div v-if="selectedMember" class="p-1 space-y-2 min-w-36">
                     <div class="flex items-center gap-2">
                         <div class="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center text-xs font-bold text-primary">
-                            {{ (selectedMember as any).avatar }}
+                            {{ selectedMember.avatar }}
                         </div>
                         <div>
                             <div class="font-semibold text-sm">{{ selectedMember.name }}</div>

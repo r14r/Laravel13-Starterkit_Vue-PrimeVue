@@ -28,16 +28,16 @@ defineOptions({
 
 const progressValue = ref(65);
 const progressAnim = ref(0);
-let interval: ReturnType<typeof setInterval> | null = null;
+const interval = ref<ReturnType<typeof setInterval> | null>(null);
 
 function startProgress() {
-    if (interval) return;
+    if (interval.value) return;
     progressAnim.value = 0;
-    interval = setInterval(() => {
+    interval.value = setInterval(() => {
         progressAnim.value += 10;
         if (progressAnim.value >= 100) {
-            clearInterval(interval!);
-            interval = null;
+            clearInterval(interval.value!);
+            interval.value = null;
         }
     }, 300);
 }
