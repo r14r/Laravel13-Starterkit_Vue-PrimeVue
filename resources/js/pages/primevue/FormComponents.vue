@@ -137,7 +137,11 @@ const treeSelectNodes = ref<TreeNode[]>([
 ]);
 
 // CascadeSelect
-const cascadeSelectValue = ref(null);
+interface CascadeCity {
+    cname: string;
+}
+
+const cascadeSelectValue = ref<CascadeCity | null>(null);
 const cascadeSelectOptions = ref([
     {
         cname: 'Australia',
@@ -573,7 +577,7 @@ const inputChipsValue = ref<string[]>(['Laravel', 'Vue']);
                     placeholder="Select a City"
                     class="w-full"
                 />
-                <p class="text-xs text-muted-foreground mt-1">Selected: {{ (cascadeSelectValue as any)?.cname || 'none' }}</p>
+                <p class="text-xs text-muted-foreground mt-1">Selected: {{ cascadeSelectValue?.cname || 'none' }}</p>
             </div>
         </section>
 

@@ -335,6 +335,7 @@ const deferredLoaded = ref(false);
                     <i class="pi pi-check-circle text-4xl text-green-500 mb-3 block" />
                     <p class="font-semibold">Content Loaded!</p>
                     <p class="text-sm text-muted-foreground">This content was loaded lazily when it entered the viewport.</p>
+                    <p v-if="deferredLoaded" class="text-xs text-green-600 mt-2">✓ Load event fired</p>
                 </div>
             </DeferredContent>
         </section>

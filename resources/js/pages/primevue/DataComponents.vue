@@ -352,7 +352,7 @@ const orgChartData = ref({
         <section class="space-y-4">
             <h2 class="text-xl font-semibold border-b pb-2">OrderList</h2>
             <p class="text-sm text-muted-foreground">Drag to reorder items in the list.</p>
-            <OrderList v-model="orderListItems" list-style="height:auto" data-key="id">
+            <OrderList v-model="orderListItems" list-style="height:auto">
                 <template #header>Products</template>
                 <template #item="{ item }">
                     <div class="py-1">{{ item }}</div>
@@ -364,7 +364,7 @@ const orgChartData = ref({
         <section class="space-y-4">
             <h2 class="text-xl font-semibold border-b pb-2">PickList</h2>
             <p class="text-sm text-muted-foreground">Transfer items between two lists.</p>
-            <PickList v-model="pickListItems" data-key="id">
+            <PickList v-model="pickListItems">
                 <template #sourceheader>Available</template>
                 <template #targetheader>Selected</template>
                 <template #item="{ item }">
