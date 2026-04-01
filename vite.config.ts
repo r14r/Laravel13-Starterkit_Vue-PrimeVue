@@ -23,6 +23,7 @@ export default defineConfig({
         }),
         wayfinder({
             formVariants: true,
+            command: 'true', // routes are pre-generated as stubs; replace with: php artisan wayfinder:generate
         }),
     ],
 });
