@@ -4,6 +4,8 @@ import { ref } from 'vue';
 import Toast from 'primevue/toast';
 import Message from 'primevue/message';
 import Button from 'primevue/button';
+import InputText from 'primevue/inputtext';
+import InlineMessage from 'primevue/inlinemessage';
 import { useToast } from 'primevue/usetoast';
 
 defineOptions({
@@ -140,6 +142,36 @@ const closedMessages = ref(new Set<string>());
                         icon="pi pi-refresh"
                         @click="closedMessages.clear()"
                     />
+                </div>
+            </div>
+        </section>
+
+        <!-- InlineMessage -->
+        <section class="space-y-4">
+            <h2 class="text-xl font-semibold border-b pb-2">InlineMessage</h2>
+            <p class="text-sm text-muted-foreground">Compact inline message component for showing short status messages.</p>
+            <div class="flex flex-wrap gap-3">
+                <InlineMessage severity="info">Info message</InlineMessage>
+                <InlineMessage severity="success">Operation completed successfully</InlineMessage>
+                <InlineMessage severity="warn">This field is required</InlineMessage>
+                <InlineMessage severity="error">Invalid email address</InlineMessage>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                <div class="space-y-2">
+                    <label class="text-sm font-medium">Field Validation Example</label>
+                    <div class="flex flex-col gap-1">
+                        <InputText placeholder="Email address" invalid class="w-full" />
+                        <InlineMessage severity="error">Please enter a valid email address</InlineMessage>
+                    </div>
+                </div>
+                <div class="space-y-2">
+                    <label class="text-sm font-medium">Icon Only</label>
+                    <div class="flex gap-2">
+                        <InlineMessage severity="info" />
+                        <InlineMessage severity="success" />
+                        <InlineMessage severity="warn" />
+                        <InlineMessage severity="error" />
+                    </div>
                 </div>
             </div>
         </section>

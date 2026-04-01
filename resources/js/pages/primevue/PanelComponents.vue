@@ -26,6 +26,7 @@ import StepPanels from 'primevue/steppanels';
 import StepPanel from 'primevue/steppanel';
 import Button from 'primevue/button';
 import Tag from 'primevue/tag';
+import DeferredContent from 'primevue/deferredcontent';
 
 defineOptions({
     layout: (props: object) => ({
@@ -37,6 +38,7 @@ defineOptions({
 });
 
 const activeStep = ref('0');
+const deferredLoaded = ref(false);
 </script>
 
 <template>
@@ -322,6 +324,19 @@ const activeStep = ref('0');
                     </StepPanel>
                 </StepPanels>
             </Stepper>
+        </section>
+
+        <!-- DeferredContent -->
+        <section class="space-y-4">
+            <h2 class="text-xl font-semibold border-b pb-2">DeferredContent</h2>
+            <p class="text-sm text-muted-foreground">Content is loaded lazily when it enters the viewport.</p>
+            <DeferredContent @load="deferredLoaded = true">
+                <div class="border rounded-lg p-6 bg-surface-50 dark:bg-surface-800 text-center">
+                    <i class="pi pi-check-circle text-4xl text-green-500 mb-3 block" />
+                    <p class="font-semibold">Content Loaded!</p>
+                    <p class="text-sm text-muted-foreground">This content was loaded lazily when it entered the viewport.</p>
+                </div>
+            </DeferredContent>
         </section>
     </div>
 </template>

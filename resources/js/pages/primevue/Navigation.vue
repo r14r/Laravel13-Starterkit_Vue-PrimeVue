@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Head } from '@inertiajs/vue3';
-import { ref } from 'vue';
+import { ref, h } from 'vue';
 import Menubar from 'primevue/menubar';
 import Menu from 'primevue/menu';
 import PanelMenu from 'primevue/panelmenu';
@@ -10,6 +10,7 @@ import Steps from 'primevue/steps';
 import TabMenu from 'primevue/tabmenu';
 import MegaMenu from 'primevue/megamenu';
 import Button from 'primevue/button';
+import Dock from 'primevue/dock';
 import type { MenuItem } from 'primevue/menuitem';
 
 defineOptions({
@@ -179,6 +180,15 @@ const megaMenuItems = ref<MenuItem[]>([
     { label: 'Deals', icon: 'pi pi-tag' },
     { label: 'About', icon: 'pi pi-info-circle' },
 ]);
+
+// Dock
+const dockItems = ref([
+    { label: 'Finder', icon: () => h('i', { class: 'pi pi-folder text-2xl text-blue-400' }) },
+    { label: 'Terminal', icon: () => h('i', { class: 'pi pi-desktop text-2xl text-gray-600' }) },
+    { label: 'App Store', icon: () => h('i', { class: 'pi pi-shopping-bag text-2xl text-blue-500' }) },
+    { label: 'Settings', icon: () => h('i', { class: 'pi pi-cog text-2xl text-gray-500' }) },
+    { label: 'Photos', icon: () => h('i', { class: 'pi pi-image text-2xl text-orange-400' }) },
+]);
 </script>
 
 <template>
@@ -267,6 +277,21 @@ const megaMenuItems = ref<MenuItem[]>([
             <h2 class="text-xl font-semibold border-b pb-2">PanelMenu (Sidebar Navigation)</h2>
             <div class="w-64 border rounded-lg overflow-hidden">
                 <PanelMenu :model="panelMenuItems" />
+            </div>
+        </section>
+
+        <!-- Dock -->
+        <section class="space-y-4">
+            <h2 class="text-xl font-semibold border-b pb-2">Dock</h2>
+            <p class="text-sm text-muted-foreground">macOS-style dock with magnification on hover.</p>
+            <div class="relative overflow-hidden bg-surface-100 dark:bg-surface-800 rounded-xl" style="height: 200px;">
+                <Dock :model="dockItems" position="bottom">
+                    <template #item="{ item }">
+                        <a v-tooltip.top="item.label" class="p-dock-item-link">
+                            <component :is="item.icon" />
+                        </a>
+                    </template>
+                </Dock>
             </div>
         </section>
     </div>
