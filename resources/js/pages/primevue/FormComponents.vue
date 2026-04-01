@@ -83,8 +83,8 @@ const radioValue = ref('');
 const toggleValue = ref(false);
 
 // Rating
-const ratingValue = ref<number | null>(3);
-const ratingStarsValue = ref<number | null>(null);
+const ratingValue = ref<number | undefined>(3);
+const ratingStarsValue = ref<number | undefined>(undefined);
 
 // ColorPicker
 const colorValue = ref('ff0000');

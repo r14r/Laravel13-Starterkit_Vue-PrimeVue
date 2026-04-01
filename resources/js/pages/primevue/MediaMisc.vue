@@ -310,7 +310,7 @@ const galleriaImages = ref([
             <p class="text-sm text-muted-foreground">Drag the slider to compare two images side by side.</p>
             <div class="max-w-md">
                 <ImageCompare>
-                    <template #start>
+                    <template #left>
                         <img
                             src="https://primefaces.org/cdn/primevue/images/nature/nature1.jpg"
                             alt="Before"
@@ -318,7 +318,7 @@ const galleriaImages = ref([
                             style="max-height: 250px; object-fit: cover;"
                         />
                     </template>
-                    <template #end>
+                    <template #right>
                         <img
                             src="https://primefaces.org/cdn/primevue/images/nature/nature2.jpg"
                             alt="After"

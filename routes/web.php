@@ -31,6 +31,7 @@ Route::middleware(['auth'])->prefix('primevue')->group(function () {
     Route::inertia('/navigation', 'primevue/Navigation')->name('primevue.navigation');
     Route::inertia('/charts', 'primevue/Charts')->name('primevue.charts');
     Route::inertia('/misc', 'primevue/MiscComponents')->name('primevue.misc');
+    Route::inertia('/file', 'primevue/FileUpload')->name('primevue.file');
 });
 
 require __DIR__.'/settings.php';

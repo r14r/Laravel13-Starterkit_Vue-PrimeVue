@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Head } from '@inertiajs/vue3';
-import { ref, h } from 'vue';
+import { ref } from 'vue';
 import Menubar from 'primevue/menubar';
 import Menu from 'primevue/menu';
 import PanelMenu from 'primevue/panelmenu';
@@ -182,12 +182,12 @@ const megaMenuItems = ref<MenuItem[]>([
 ]);
 
 // Dock
-const dockItems = ref([
-    { label: 'Finder', icon: () => h('i', { class: 'pi pi-folder text-2xl text-blue-400' }) },
-    { label: 'Terminal', icon: () => h('i', { class: 'pi pi-desktop text-2xl text-gray-600' }) },
-    { label: 'App Store', icon: () => h('i', { class: 'pi pi-shopping-bag text-2xl text-blue-500' }) },
-    { label: 'Settings', icon: () => h('i', { class: 'pi pi-cog text-2xl text-gray-500' }) },
-    { label: 'Photos', icon: () => h('i', { class: 'pi pi-image text-2xl text-orange-400' }) },
+const dockItems = ref<MenuItem[]>([
+    { label: 'Finder', icon: 'pi pi-folder' },
+    { label: 'Terminal', icon: 'pi pi-desktop' },
+    { label: 'App Store', icon: 'pi pi-shopping-bag' },
+    { label: 'Settings', icon: 'pi pi-cog' },
+    { label: 'Photos', icon: 'pi pi-image' },
 ]);
 </script>
 
@@ -286,10 +286,8 @@ const dockItems = ref([
             <p class="text-sm text-muted-foreground">macOS-style dock with magnification on hover.</p>
             <div class="relative overflow-hidden bg-surface-100 dark:bg-surface-800 rounded-xl" style="height: 200px;">
                 <Dock :model="dockItems" position="bottom">
-                    <template #item="{ item }">
-                        <a v-tooltip.top="item.label" class="p-dock-item-link">
-                            <component :is="item.icon" />
-                        </a>
+                    <template #itemicon="{ item }">
+                        <i :class="[item.icon, 'text-2xl']" />
                     </template>
                 </Dock>
             </div>
