@@ -23,6 +23,9 @@ export default defineConfig({
         }),
         wayfinder({
             formVariants: true,
+            // 'true' is a shell no-op; wayfinder routes are pre-generated as stubs.
+            // In production, restore: command: 'php artisan wayfinder:generate'
+            command: 'true',
         }),
     ],
 });
