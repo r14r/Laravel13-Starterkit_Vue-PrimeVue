@@ -35,6 +35,18 @@ const mainNavItems = computed<NavItem[]>(() => [
         title: 'PrimeVue Components',
         href: '/primevue',
         icon: Layers,
+        items: [
+            { title: 'Form Components', href: '/primevue/form' },
+            { title: 'Button Components', href: '/primevue/buttons' },
+            { title: 'Data Components', href: '/primevue/data' },
+            { title: 'Panel Components', href: '/primevue/panels' },
+            { title: 'Overlay Components', href: '/primevue/overlay' },
+            { title: 'Messages & Notifications', href: '/primevue/messages' },
+            { title: 'Media & Display', href: '/primevue/media' },
+            { title: 'Navigation', href: '/primevue/navigation' },
+            { title: 'Charts', href: '/primevue/charts' },
+            { title: 'Misc Components', href: '/primevue/misc' },
+        ],
     },
 ]);
 
