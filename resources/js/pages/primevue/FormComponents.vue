@@ -23,6 +23,18 @@ import FloatLabel from 'primevue/floatlabel';
 import IftaLabel from 'primevue/iftalabel';
 import IconField from 'primevue/iconfield';
 import InputIcon from 'primevue/inputicon';
+import Button from 'primevue/button';
+import SelectButton from 'primevue/selectbutton';
+import Listbox from 'primevue/listbox';
+import TreeSelect from 'primevue/treeselect';
+import CascadeSelect from 'primevue/cascadeselect';
+import InputGroup from 'primevue/inputgroup';
+import InputGroupAddon from 'primevue/inputgroupaddon';
+import CheckboxGroup from 'primevue/checkboxgroup';
+import RadioButtonGroup from 'primevue/radiobuttongroup';
+import InputOtp from 'primevue/inputotp';
+import InputChips from 'primevue/inputchips';
+import type { TreeNode } from 'primevue/treenode';
 
 defineOptions({
     layout: (props: object) => ({
@@ -71,8 +83,8 @@ const radioValue = ref('');
 const toggleValue = ref(false);
 
 // Rating
-const ratingValue = ref<number | null>(3);
-const ratingStarsValue = ref<number | null>(null);
+const ratingValue = ref<number | undefined>(3);
+const ratingStarsValue = ref<number | undefined>(undefined);
 
 // ColorPicker
 const colorValue = ref('ff0000');
@@ -86,6 +98,81 @@ const chipsValue = ref<string[]>(['Vue', 'PrimeVue']);
 
 // ToggleButton
 const toggleButtonValue = ref(false);
+
+// SelectButton
+const selectButtonValue = ref('Monthly');
+const selectButtonOptions = ['Monthly', 'Yearly'];
+const selectButtonSeverity = ref('info');
+const selectButtonSeverities = [
+    { label: 'Success', value: 'success' },
+    { label: 'Info', value: 'info' },
+    { label: 'Warning', value: 'warning' },
+];
+
+// Listbox
+const listboxValue = ref<string | null>(null);
+const listboxOptions = ['New York', 'London', 'Paris', 'Tokyo', 'Berlin', 'Sydney'];
+
+// TreeSelect
+const treeSelectValue = ref(null);
+const treeSelectNodes = ref<TreeNode[]>([
+    {
+        key: '0',
+        label: 'Documents',
+        children: [
+            { key: '0-0', label: 'Work', children: [
+                { key: '0-0-0', label: 'Expenses.doc' },
+                { key: '0-0-1', label: 'Resume.doc' },
+            ]},
+        ],
+    },
+    {
+        key: '1',
+        label: 'Events',
+        children: [
+            { key: '1-0', label: 'Meeting' },
+            { key: '1-1', label: 'Product Launch' },
+        ],
+    },
+]);
+
+// CascadeSelect
+interface CascadeCity {
+    cname: string;
+}
+
+const cascadeSelectValue = ref<CascadeCity | null>(null);
+const cascadeSelectOptions = ref([
+    {
+        cname: 'Australia',
+        code: 'AU',
+        states: [
+            { cname: 'New South Wales', cities: [{ cname: 'Sydney' }, { cname: 'Newcastle' }] },
+            { cname: 'Queensland', cities: [{ cname: 'Brisbane' }, { cname: 'Gold Coast' }] },
+        ],
+    },
+    {
+        cname: 'United States',
+        code: 'US',
+        states: [
+            { cname: 'California', cities: [{ cname: 'Los Angeles' }, { cname: 'San Francisco' }] },
+            { cname: 'New York', cities: [{ cname: 'New York City' }, { cname: 'Buffalo' }] },
+        ],
+    },
+]);
+
+// CheckboxGroup
+const checkboxGroupValue = ref<string[]>([]);
+
+// RadioButtonGroup
+const radioGroupValue = ref('');
+
+// InputOtp
+const otpValue = ref('');
+const otpMaskedValue = ref('');
+
+// InputChips
+const inputChipsValue = ref<string[]>(['Laravel', 'Vue']);
 </script>
 
 <template>
@@ -402,6 +489,203 @@ const toggleButtonValue = ref(false);
                 <label class="text-sm font-medium">Press Enter to add a chip</label>
                 <Chips v-model="chipsValue" placeholder="Add tags..." class="w-full" />
                 <p class="text-sm text-muted-foreground">Tags: {{ chipsValue.join(', ') }}</p>
+            </div>
+        </section>
+
+        <!-- InputOtp -->
+        <section class="space-y-4">
+            <h2 class="text-xl font-semibold border-b pb-2">InputOtp</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="flex flex-col gap-2">
+                    <label class="text-sm font-medium">Basic OTP (6 digits)</label>
+                    <InputOtp v-model="otpValue" :length="6" />
+                    <p class="text-xs text-muted-foreground">Value: {{ otpValue }}</p>
+                </div>
+                <div class="flex flex-col gap-2">
+                    <label class="text-sm font-medium">Masked OTP</label>
+                    <InputOtp v-model="otpMaskedValue" :length="4" mask />
+                </div>
+                <div class="flex flex-col gap-2">
+                    <label class="text-sm font-medium">Integer Only</label>
+                    <InputOtp v-model="otpValue" :length="6" integer-only />
+                </div>
+            </div>
+        </section>
+
+        <!-- SelectButton -->
+        <section class="space-y-4">
+            <h2 class="text-xl font-semibold border-b pb-2">SelectButton</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="flex flex-col gap-2">
+                    <label class="text-sm font-medium">Basic</label>
+                    <SelectButton v-model="selectButtonValue" :options="selectButtonOptions" />
+                    <p class="text-xs text-muted-foreground">Selected: {{ selectButtonValue }}</p>
+                </div>
+                <div class="flex flex-col gap-2">
+                    <label class="text-sm font-medium">With Objects</label>
+                    <SelectButton v-model="selectButtonSeverity" :options="selectButtonSeverities" option-label="label" option-value="value" />
+                </div>
+                <div class="flex flex-col gap-2">
+                    <label class="text-sm font-medium">Multiple</label>
+                    <SelectButton :model-value="['Monthly']" :options="selectButtonOptions" multiple />
+                </div>
+            </div>
+        </section>
+
+        <!-- Listbox -->
+        <section class="space-y-4">
+            <h2 class="text-xl font-semibold border-b pb-2">Listbox</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="flex flex-col gap-2">
+                    <label class="text-sm font-medium">Single Select</label>
+                    <Listbox v-model="listboxValue" :options="listboxOptions" class="w-full" />
+                    <p class="text-xs text-muted-foreground">Selected: {{ listboxValue }}</p>
+                </div>
+                <div class="flex flex-col gap-2">
+                    <label class="text-sm font-medium">With Filter</label>
+                    <Listbox v-model="listboxValue" :options="listboxOptions" filter class="w-full" />
+                </div>
+            </div>
+        </section>
+
+        <!-- TreeSelect -->
+        <section class="space-y-4">
+            <h2 class="text-xl font-semibold border-b pb-2">TreeSelect</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="flex flex-col gap-2">
+                    <label class="text-sm font-medium">Single Select</label>
+                    <TreeSelect v-model="treeSelectValue" :options="treeSelectNodes" placeholder="Select a node" class="w-full" />
+                </div>
+                <div class="flex flex-col gap-2">
+                    <label class="text-sm font-medium">Multiple Select</label>
+                    <TreeSelect v-model="treeSelectValue" :options="treeSelectNodes" selection-mode="multiple" placeholder="Select nodes" class="w-full" />
+                </div>
+            </div>
+        </section>
+
+        <!-- CascadeSelect -->
+        <section class="space-y-4">
+            <h2 class="text-xl font-semibold border-b pb-2">CascadeSelect</h2>
+            <div class="max-w-sm">
+                <label class="text-sm font-medium mb-2 block">Select a City</label>
+                <CascadeSelect
+                    v-model="cascadeSelectValue"
+                    :options="cascadeSelectOptions"
+                    option-label="cname"
+                    option-group-label="cname"
+                    :option-group-children="['states', 'cities']"
+                    placeholder="Select a City"
+                    class="w-full"
+                />
+                <p class="text-xs text-muted-foreground mt-1">Selected: {{ cascadeSelectValue?.cname || 'none' }}</p>
+            </div>
+        </section>
+
+        <!-- InputGroup -->
+        <section class="space-y-4">
+            <h2 class="text-xl font-semibold border-b pb-2">InputGroup</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="flex flex-col gap-1">
+                    <label class="text-sm font-medium">With Addon</label>
+                    <InputGroup>
+                        <InputGroupAddon>@</InputGroupAddon>
+                        <InputText placeholder="Username" />
+                    </InputGroup>
+                </div>
+                <div class="flex flex-col gap-1">
+                    <label class="text-sm font-medium">With Button</label>
+                    <InputGroup>
+                        <InputText placeholder="Search..." />
+                        <Button icon="pi pi-search" />
+                    </InputGroup>
+                </div>
+                <div class="flex flex-col gap-1">
+                    <label class="text-sm font-medium">Double Addons</label>
+                    <InputGroup>
+                        <InputGroupAddon>$</InputGroupAddon>
+                        <InputText placeholder="Amount" />
+                        <InputGroupAddon>.00</InputGroupAddon>
+                    </InputGroup>
+                </div>
+                <div class="flex flex-col gap-1">
+                    <label class="text-sm font-medium">With Checkbox</label>
+                    <InputGroup>
+                        <InputGroupAddon>
+                            <Checkbox :binary="true" :model-value="false" />
+                        </InputGroupAddon>
+                        <InputText placeholder="Checkbox addon" />
+                    </InputGroup>
+                </div>
+            </div>
+        </section>
+
+        <!-- CheckboxGroup -->
+        <section class="space-y-4">
+            <h2 class="text-xl font-semibold border-b pb-2">CheckboxGroup</h2>
+            <div class="flex flex-col gap-2">
+                <label class="text-sm font-medium">Select Frameworks</label>
+                <CheckboxGroup v-model="checkboxGroupValue" name="frameworks">
+                    <div class="flex flex-wrap gap-4">
+                        <div class="flex items-center gap-2">
+                            <Checkbox input-id="cg-vue" value="Vue" />
+                            <label for="cg-vue">Vue</label>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <Checkbox input-id="cg-react" value="React" />
+                            <label for="cg-react">React</label>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <Checkbox input-id="cg-angular" value="Angular" />
+                            <label for="cg-angular">Angular</label>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <Checkbox input-id="cg-svelte" value="Svelte" />
+                            <label for="cg-svelte">Svelte</label>
+                        </div>
+                    </div>
+                </CheckboxGroup>
+                <p class="text-xs text-muted-foreground">Selected: {{ checkboxGroupValue.join(', ') || 'none' }}</p>
+            </div>
+        </section>
+
+        <!-- RadioButtonGroup -->
+        <section class="space-y-4">
+            <h2 class="text-xl font-semibold border-b pb-2">RadioButtonGroup</h2>
+            <div class="flex flex-col gap-2">
+                <label class="text-sm font-medium">Select Size</label>
+                <RadioButtonGroup v-model="radioGroupValue" name="size">
+                    <div class="flex flex-wrap gap-4">
+                        <div class="flex items-center gap-2">
+                            <RadioButton input-id="rg-sm" value="Small" />
+                            <label for="rg-sm">Small</label>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <RadioButton input-id="rg-md" value="Medium" />
+                            <label for="rg-md">Medium</label>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <RadioButton input-id="rg-lg" value="Large" />
+                            <label for="rg-lg">Large</label>
+                        </div>
+                    </div>
+                </RadioButtonGroup>
+                <p class="text-xs text-muted-foreground">Selected: {{ radioGroupValue || 'none' }}</p>
+            </div>
+        </section>
+
+        <!-- InputChips -->
+        <section class="space-y-4">
+            <h2 class="text-xl font-semibold border-b pb-2">InputChips</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="flex flex-col gap-1">
+                    <label class="text-sm font-medium">Basic (press Enter to add)</label>
+                    <InputChips v-model="inputChipsValue" placeholder="Add tags..." class="w-full" />
+                    <p class="text-xs text-muted-foreground">Tags: {{ inputChipsValue.join(', ') }}</p>
+                </div>
+                <div class="flex flex-col gap-1">
+                    <label class="text-sm font-medium">With Separator (,)</label>
+                    <InputChips v-model="inputChipsValue" separator="," placeholder="Separate with comma..." class="w-full" />
+                </div>
             </div>
         </section>
     </div>

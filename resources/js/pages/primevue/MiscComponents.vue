@@ -10,7 +10,14 @@ import ToggleButton from 'primevue/togglebutton';
 import ContextMenu from 'primevue/contextmenu';
 import Button from 'primevue/button';
 import Card from 'primevue/card';
+import InputText from 'primevue/inputtext';
+import MeterGroup from 'primevue/metergroup';
+import OverlayBadge from 'primevue/overlaybadge';
+import Avatar from 'primevue/avatar';
+import FocusTrap from 'primevue/focustrap';
 import type { MenuItem } from 'primevue/menuitem';
+
+const vFocustrap = FocusTrap;
 
 defineOptions({
     layout: (props: object) => ({
@@ -55,6 +62,9 @@ const contextMenuItems = ref<MenuItem[]>([
     { label: 'Copy', icon: 'pi pi-fw pi-copy' },
     { label: 'Delete', icon: 'pi pi-fw pi-trash' },
 ]);
+
+// FocusTrap
+const focusTrapActive = ref(false);
 
 // Terminal
 function commandHandler(text: string) {
@@ -203,6 +213,73 @@ function commandHandler(text: string) {
                 @command="commandHandler"
                 class="rounded-lg"
             />
+        </section>
+
+        <!-- MeterGroup -->
+        <section class="space-y-4">
+            <h2 class="text-xl font-semibold border-b pb-2">MeterGroup</h2>
+            <p class="text-sm text-muted-foreground">Multi-segment progress meter for showing breakdown of values.</p>
+            <div class="space-y-6">
+                <div>
+                    <label class="text-sm font-medium mb-2 block">Storage Usage</label>
+                    <MeterGroup :value="[
+                        { label: 'Documents', value: 25, color: '#4f46e5' },
+                        { label: 'Videos', value: 35, color: '#0891b2' },
+                        { label: 'Photos', value: 20, color: '#16a34a' },
+                        { label: 'Others', value: 10, color: '#d97706' },
+                    ]" />
+                </div>
+                <div>
+                    <label class="text-sm font-medium mb-2 block">Project Completion</label>
+                    <MeterGroup :value="[
+                        { label: 'Completed', value: 65, color: '#16a34a' },
+                        { label: 'In Progress', value: 25, color: '#d97706' },
+                        { label: 'Blocked', value: 10, color: '#dc2626' },
+                    ]" />
+                </div>
+            </div>
+        </section>
+
+        <!-- OverlayBadge -->
+        <section class="space-y-4">
+            <h2 class="text-xl font-semibold border-b pb-2">OverlayBadge</h2>
+            <p class="text-sm text-muted-foreground">Positions a badge over another component.</p>
+            <div class="flex flex-wrap gap-8 items-center">
+                <OverlayBadge value="2" severity="danger">
+                    <Avatar icon="pi pi-envelope" size="large" />
+                </OverlayBadge>
+                <OverlayBadge value="5" severity="info">
+                    <Avatar icon="pi pi-bell" size="large" />
+                </OverlayBadge>
+                <OverlayBadge severity="success">
+                    <Avatar icon="pi pi-user" size="large" />
+                </OverlayBadge>
+                <OverlayBadge value="99+" severity="warn">
+                    <Avatar icon="pi pi-shopping-cart" size="large" />
+                </OverlayBadge>
+            </div>
+        </section>
+
+        <!-- FocusTrap -->
+        <section class="space-y-4">
+            <h2 class="text-xl font-semibold border-b pb-2">FocusTrap</h2>
+            <p class="text-sm text-muted-foreground">Traps keyboard focus within an element. Useful for accessibility in modal dialogs.</p>
+            <div class="space-y-4">
+                <Button :label="focusTrapActive ? 'Deactivate Focus Trap' : 'Activate Focus Trap'" @click="focusTrapActive = !focusTrapActive" />
+                <div
+                    v-focustrap="{ disabled: !focusTrapActive }"
+                    class="border-2 rounded-lg p-4 space-y-3"
+                    :class="focusTrapActive ? 'border-primary' : 'border-surface-200 dark:border-surface-700'"
+                >
+                    <p class="text-sm font-medium">{{ focusTrapActive ? '🔒 Focus is trapped here (Tab cycles within)' : 'Focus trap inactive' }}</p>
+                    <div class="flex flex-wrap gap-3">
+                        <InputText placeholder="First field" />
+                        <InputText placeholder="Second field" />
+                        <Button label="Action" severity="secondary" />
+                        <Button label="Cancel" severity="danger" outlined />
+                    </div>
+                </div>
+            </div>
         </section>
     </div>
 </template>

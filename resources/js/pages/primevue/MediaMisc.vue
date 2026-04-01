@@ -16,6 +16,10 @@ import ScrollTop from 'primevue/scrolltop';
 import Inplace from 'primevue/inplace';
 import Button from 'primevue/button';
 import InputText from 'primevue/inputtext';
+import ImageCompare from 'primevue/imagecompare';
+import AnimateOnScroll from 'primevue/animateonscroll';
+
+const vAnimateonscroll = AnimateOnScroll;
 
 defineOptions({
     layout: (props: object) => ({
@@ -298,6 +302,61 @@ const galleriaImages = ref([
             <h2 class="text-xl font-semibold border-b pb-2">ScrollTop</h2>
             <p class="text-sm text-muted-foreground">A "scroll to top" button appears when you scroll down enough.</p>
             <ScrollTop />
+        </section>
+
+        <!-- ImageCompare -->
+        <section class="space-y-4">
+            <h2 class="text-xl font-semibold border-b pb-2">ImageCompare</h2>
+            <p class="text-sm text-muted-foreground">Drag the slider to compare two images side by side.</p>
+            <div class="max-w-md">
+                <ImageCompare>
+                    <template #left>
+                        <img
+                            src="https://primefaces.org/cdn/primevue/images/nature/nature1.jpg"
+                            alt="Before"
+                            class="w-full"
+                            style="max-height: 250px; object-fit: cover;"
+                        />
+                    </template>
+                    <template #right>
+                        <img
+                            src="https://primefaces.org/cdn/primevue/images/nature/nature2.jpg"
+                            alt="After"
+                            class="w-full"
+                            style="max-height: 250px; object-fit: cover;"
+                        />
+                    </template>
+                </ImageCompare>
+            </div>
+        </section>
+
+        <!-- AnimateOnScroll -->
+        <section class="space-y-4">
+            <h2 class="text-xl font-semibold border-b pb-2">AnimateOnScroll</h2>
+            <p class="text-sm text-muted-foreground">Elements animate when they enter the viewport. Uses the <code class="text-xs bg-surface-100 dark:bg-surface-800 px-1 rounded">v-animateonscroll</code> directive.</p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div
+                    v-animateonscroll="{ enterClass: 'animate-fadein', leaveClass: 'animate-fadeout' }"
+                    class="border rounded-lg p-4 text-center bg-surface-50 dark:bg-surface-800"
+                >
+                    <i class="pi pi-star text-3xl text-yellow-400 mb-2 block" />
+                    <p class="font-semibold">Fade In</p>
+                </div>
+                <div
+                    v-animateonscroll="{ enterClass: 'animate-slidein', leaveClass: 'animate-slideout' }"
+                    class="border rounded-lg p-4 text-center bg-surface-50 dark:bg-surface-800"
+                >
+                    <i class="pi pi-heart text-3xl text-red-400 mb-2 block" />
+                    <p class="font-semibold">Slide In</p>
+                </div>
+                <div
+                    v-animateonscroll="{ enterClass: 'animate-zoomin', leaveClass: 'animate-zoomout' }"
+                    class="border rounded-lg p-4 text-center bg-surface-50 dark:bg-surface-800"
+                >
+                    <i class="pi pi-bolt text-3xl text-blue-400 mb-2 block" />
+                    <p class="font-semibold">Zoom In</p>
+                </div>
+            </div>
         </section>
     </div>
 </template>

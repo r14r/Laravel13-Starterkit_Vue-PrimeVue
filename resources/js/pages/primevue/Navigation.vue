@@ -10,6 +10,7 @@ import Steps from 'primevue/steps';
 import TabMenu from 'primevue/tabmenu';
 import MegaMenu from 'primevue/megamenu';
 import Button from 'primevue/button';
+import Dock from 'primevue/dock';
 import type { MenuItem } from 'primevue/menuitem';
 
 defineOptions({
@@ -179,6 +180,15 @@ const megaMenuItems = ref<MenuItem[]>([
     { label: 'Deals', icon: 'pi pi-tag' },
     { label: 'About', icon: 'pi pi-info-circle' },
 ]);
+
+// Dock
+const dockItems = ref<MenuItem[]>([
+    { label: 'Finder', icon: 'pi pi-folder' },
+    { label: 'Terminal', icon: 'pi pi-desktop' },
+    { label: 'App Store', icon: 'pi pi-shopping-bag' },
+    { label: 'Settings', icon: 'pi pi-cog' },
+    { label: 'Photos', icon: 'pi pi-image' },
+]);
 </script>
 
 <template>
@@ -267,6 +277,19 @@ const megaMenuItems = ref<MenuItem[]>([
             <h2 class="text-xl font-semibold border-b pb-2">PanelMenu (Sidebar Navigation)</h2>
             <div class="w-64 border rounded-lg overflow-hidden">
                 <PanelMenu :model="panelMenuItems" />
+            </div>
+        </section>
+
+        <!-- Dock -->
+        <section class="space-y-4">
+            <h2 class="text-xl font-semibold border-b pb-2">Dock</h2>
+            <p class="text-sm text-muted-foreground">macOS-style dock with magnification on hover.</p>
+            <div class="relative overflow-hidden bg-surface-100 dark:bg-surface-800 rounded-xl" style="height: 200px;">
+                <Dock :model="dockItems" position="bottom">
+                    <template #itemicon="{ item }">
+                        <i :class="[item.icon, 'text-2xl']" />
+                    </template>
+                </Dock>
             </div>
         </section>
     </div>

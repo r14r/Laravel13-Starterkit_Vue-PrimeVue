@@ -4,6 +4,7 @@ import { ref } from 'vue';
 import Button from 'primevue/button';
 import SplitButton from 'primevue/splitbutton';
 import SpeedDial from 'primevue/speeddial';
+import ButtonGroup from 'primevue/buttongroup';
 import Toast from 'primevue/toast';
 import { useToast } from 'primevue/usetoast';
 
@@ -179,6 +180,38 @@ const speedDialItems = [
                 <div class="relative h-20 flex items-center justify-center w-20">
                     <SpeedDial :model="speedDialItems" direction="right" />
                     <p class="absolute -bottom-6 text-xs text-center text-muted-foreground">Right</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ButtonGroup -->
+        <section class="space-y-4">
+            <h2 class="text-xl font-semibold border-b pb-2">ButtonGroup</h2>
+            <div class="flex flex-wrap gap-6 items-start">
+                <div class="flex flex-col gap-2">
+                    <label class="text-sm font-medium">Basic Group</label>
+                    <ButtonGroup>
+                        <Button label="Save" icon="pi pi-check" />
+                        <Button label="Delete" icon="pi pi-trash" />
+                        <Button label="Cancel" icon="pi pi-times" />
+                    </ButtonGroup>
+                </div>
+                <div class="flex flex-col gap-2">
+                    <label class="text-sm font-medium">Outlined Group</label>
+                    <ButtonGroup>
+                        <Button label="Save" icon="pi pi-check" outlined />
+                        <Button label="Delete" icon="pi pi-trash" severity="danger" outlined />
+                        <Button label="Cancel" icon="pi pi-times" severity="secondary" outlined />
+                    </ButtonGroup>
+                </div>
+                <div class="flex flex-col gap-2">
+                    <label class="text-sm font-medium">Icon Only Group</label>
+                    <ButtonGroup>
+                        <Button icon="pi pi-align-left" />
+                        <Button icon="pi pi-align-center" />
+                        <Button icon="pi pi-align-right" />
+                        <Button icon="pi pi-align-justify" />
+                    </ButtonGroup>
                 </div>
             </div>
         </section>

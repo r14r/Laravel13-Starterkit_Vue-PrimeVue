@@ -46,6 +46,7 @@ const mainNavItems = computed<NavItem[]>(() => [
             { title: 'Navigation', href: '/primevue/navigation' },
             { title: 'Charts', href: '/primevue/charts' },
             { title: 'Misc Components', href: '/primevue/misc' },
+            { title: 'File Upload', href: '/primevue/file' },
         ],
     },
 ]);

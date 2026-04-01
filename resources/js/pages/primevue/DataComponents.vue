@@ -15,6 +15,9 @@ import Button from 'primevue/button';
 import InputText from 'primevue/inputtext';
 import IconField from 'primevue/iconfield';
 import InputIcon from 'primevue/inputicon';
+import OrderList from 'primevue/orderlist';
+import PickList from 'primevue/picklist';
+import OrganizationChart from 'primevue/organizationchart';
 import type { TreeNode } from 'primevue/treenode';
 
 defineOptions({
@@ -165,6 +168,44 @@ const dataViewItems = ref([
 // --- Paginator ---
 const paginatorFirst = ref(0);
 const paginatorRows = ref(5);
+
+// --- OrderList ---
+const orderListItems = ref([
+    'Bamboo Watch', 'Blue Band', 'Blue T-Shirt', 'Bracelet', 'Brown Purse',
+    'Chakra Bracelet', 'Galaxy Earrings', 'Game Controller', 'Gold Phone Case', 'Green Earbuds',
+]);
+
+// --- PickList ---
+const pickListItems = ref([
+    ['Bamboo Watch', 'Blue Band', 'Blue T-Shirt', 'Bracelet', 'Brown Purse'],
+    ['Galaxy Earrings', 'Game Controller'],
+]);
+
+// --- OrganizationChart ---
+const orgChartData = ref({
+    key: '0',
+    label: 'CEO',
+    data: { name: 'Walter White', title: 'CEO' },
+    children: [
+        {
+            key: '0-0',
+            label: 'CFO',
+            data: { name: 'Saul Goodman', title: 'CFO' },
+            children: [
+                { key: '0-0-0', data: { name: 'Jesse Pinkman', title: 'Sales Rep' } },
+            ],
+        },
+        {
+            key: '0-1',
+            label: 'CTO',
+            data: { name: 'Mike Ehrmantraut', title: 'CTO' },
+            children: [
+                { key: '0-1-0', data: { name: 'Hank Schrader', title: 'Dev Lead' } },
+                { key: '0-1-1', data: { name: 'Skyler White', title: 'Designer' } },
+            ],
+        },
+    ],
+});
 </script>
 
 <template>
@@ -305,6 +346,44 @@ const paginatorRows = ref(5);
                 :rows-per-page-options="[5, 10, 20]"
             />
             <p class="text-sm text-muted-foreground">Page {{ Math.floor(paginatorFirst / paginatorRows) + 1 }} of {{ Math.ceil(50 / paginatorRows) }} ({{ paginatorRows }} rows/page)</p>
+        </section>
+
+        <!-- OrderList -->
+        <section class="space-y-4">
+            <h2 class="text-xl font-semibold border-b pb-2">OrderList</h2>
+            <p class="text-sm text-muted-foreground">Drag to reorder items in the list.</p>
+            <OrderList v-model="orderListItems" list-style="height:auto">
+                <template #header>Products</template>
+                <template #item="{ item }">
+                    <div class="py-1">{{ item }}</div>
+                </template>
+            </OrderList>
+        </section>
+
+        <!-- PickList -->
+        <section class="space-y-4">
+            <h2 class="text-xl font-semibold border-b pb-2">PickList</h2>
+            <p class="text-sm text-muted-foreground">Transfer items between two lists.</p>
+            <PickList v-model="pickListItems">
+                <template #sourceheader>Available</template>
+                <template #targetheader>Selected</template>
+                <template #item="{ item }">
+                    <div class="py-1">{{ item }}</div>
+                </template>
+            </PickList>
+        </section>
+
+        <!-- OrganizationChart -->
+        <section class="space-y-4">
+            <h2 class="text-xl font-semibold border-b pb-2">OrganizationChart</h2>
+            <OrganizationChart :value="orgChartData" collapsible>
+                <template #default="{ node }">
+                    <div class="flex flex-col items-center p-2">
+                        <span class="font-bold text-sm">{{ node.data?.name }}</span>
+                        <span class="text-xs text-muted-foreground">{{ node.data?.title }}</span>
+                    </div>
+                </template>
+            </OrganizationChart>
         </section>
     </div>
 </template>
